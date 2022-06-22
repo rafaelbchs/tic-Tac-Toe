@@ -1,0 +1,36 @@
+body {
+    background-image: url("https://img.freepik.com/free-vector/games-time-neon-text-with-gamepad_1262-15457.jpg?w=2000");
+    font-family: 'Press Start 2P', cursive;
+}
+
+p {
+    color: aliceblue;
+    float: right;
+    padding-right: 1rem;
+}
+
+.header {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: black;
+    opacity: 0.8;
+}
+
+.li {
+    display: inline;
+    color: white;
+    text-align: center;
+    padding: 7px 8px;
+    text-decoration: none;
+    float: left;
+}
+
+.li:hover {
+    background-color:darkgrey;
+    color: black;
+}

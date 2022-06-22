@@ -4,18 +4,18 @@
 }
 
 h1 {
-    padding: 1rem;
+    text-align: center;
 }
 
 html {
     background-color:aliceblue;
-    color: black
+    color: black;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: auto;
+    margin: 0;
+    text-align: center;
 }
 
 
@@ -28,6 +28,12 @@ td {
     font-size: 3rem;  
 }
 
+
+h3 {
+    display: inline-block;
+    width: 20%;
+}
+
 .x {
     background-color: khaki;
 }
@@ -36,6 +42,14 @@ td {
     background-color: tomato;
 }
 
+.disabled{
+    pointer-events:none;
+}
+
 td:hover {
-    background-color: #3d4250;
+    opacity: 0.5;
+}
+
+#table {
+    margin: auto;
 }

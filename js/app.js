@@ -1,3 +1,7 @@
+const player1_name = window.prompt("Before we start, I need you to tell me your name")
+
+
+
 let initialState;
 const gameState = {
     players: ['x', 'o'],
@@ -22,13 +26,13 @@ makeRow()
 makeRow()
 makeRow()
 
-player = "x"
+player = "o"
 
 function playerMove(event){
     let clickedElement = event.target
     if (clickedElement.tagName === "TD") {
-        clickedElement.innerHTML = player
-        clickedElement.className = player
+        clickedElement.innerHTML = player.toUpperCase()
+        clickedElement.classList.add(player, "disabled")
     }
 }
 
