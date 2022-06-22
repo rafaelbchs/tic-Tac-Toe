@@ -1,6 +1,29 @@
-const player1_name = window.prompt("Before we start, I need you to tell me your name")
+let player1_name = window.prompt("Before we start, I need you to tell me your name.")
 
+let player2_name = window.prompt("Hello, " + player1_name + ". Are you going to play with someone else? If you are, type the name of the player. Otherwise, type no")
 
+let player1 = document.getElementsByClassName("player1")[0]
+player1.innerHTML = player1_name
+
+let player2 = document.getElementsByClassName("player2")[0]
+
+if (player2_name === "no"){
+    player2_name = "Computer"
+} else {
+    player2.innerHTML = player2_name
+}
+    
+let displayTurn = document.getElementsByTagName("p")[0]
+
+function chosenPlayer(){
+    if (Math.random() < 0.5){
+        displayTurn.innerHTML = player1_name + " will play first. Represented by the Xs"
+    } else {
+        displayTurn.innerHTML = player2_name + " will play first. Represented by the Os"
+    }
+}
+
+chosenPlayer();
 
 let initialState;
 const gameState = {
