@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+}
+
+h1 {
+    padding: 1rem;
+}
+
+html {
+    background-color:aliceblue;
+    color: black
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+td {
+    height: 150px;
+    width: 150px;
+    background-color: #78bec5;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 3rem;  
+}
+
+.x {
+    background-color: khaki;
+}
+
+.o {
+    background-color: tomato;
+}
+
+td:hover {
+    background-color: #3d4250;
+}
