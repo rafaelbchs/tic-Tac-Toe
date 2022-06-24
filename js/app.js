@@ -19,8 +19,6 @@ let player2_name = window.prompt(
     ". Are you going to play with someone else? If you are, type the name of the player. Otherwise, type no"
 );
 
-
-
 // CHANGING THE PLAYERS' NAMES
 let player1 = document.getElementsByClassName("player1")[0];
 player1.innerHTML = player1_name;
@@ -52,7 +50,6 @@ function chosenPlayer() {
 }
 chosenPlayer();
 
-
 //SETTING THE BOARD
 const board = document.getElementById("table");
 function makeRow() {
@@ -66,7 +63,6 @@ function makeRow() {
 makeRow();
 makeRow();
 makeRow();
-
 
 // ALTERNATING PLAYERS' TURNS
 function playerMove(event) {
@@ -114,7 +110,6 @@ function getColumn(board, colIndex) {
   return arr;
 }
 
-
 //CHECKS DIAGONALS
 function getDiagonal(board, diagNumber) {
   let arr = [];
@@ -146,95 +141,100 @@ function checkWinner(arrToCheck) {
   return false;
 }
 
-let winner = false
+let winner = false;
 //ENDS THE GAME
 function endOfGame(board) {
   for (let i = 0; i < board.length; i++) {
     let rowChecked = getRow(board, i);
     let rowAnswer = checkWinner(rowChecked);
     if (rowAnswer) {
-      winner = true 
-      gameFinished()    
+      winner = true;
+      gameFinished();
     }
     let colChecked = getColumn(board, i);
     let colAnswer = checkWinner(colChecked);
     if (colAnswer) {
-      winner = true 
-      gameFinished() 
-    } 
+      winner = true;
+      gameFinished();
+    }
   }
   for (let i = 0; i < 2; i++) {
     let diagonalChecked = getDiagonal(board, i);
     let diagAnswer = checkWinner(diagonalChecked);
     if (diagAnswer) {
-      winner = true 
-      gameFinished() 
-    } 
+      winner = true;
+      gameFinished();
+    }
   }
-  getDraw()
+  getDraw();
 }
 
 //CHECKS FOR DRAW
 function getDraw() {
-  let completeBoard = initialGame.board.toString()
+  let completeBoard = initialGame.board.toString();
   if (completeBoard.length === 17 && winner === false) {
-    setTimeout(function(){
-      let playAgain = window.prompt("It's a draw, would you like to play again?")
-    if (playAgain.toLowerCase() === "yes"){
-      resetBoard()
-    } else {
-      goodBye()
-    }
-    }, 300)
+    setTimeout(function () {
+      let playAgain = window
+        .prompt("It's a draw, would you like to play again?")
+        .toLowerCase();
+      if (playAgain === "yes") {
+        resetBoard();
+      } else {
+        goodBye();
+      }
+    }, 300);
   }
 }
-
 
 // SHOWS THAT THE GAME FINISHED
-function gameFinished(){
-  let cells = document.getElementsByTagName("td")
-  Array.from(cells).forEach(cell => cell.classList.add("endofgame"))
+function gameFinished() {
+  let cells = document.getElementsByTagName("td");
+  Array.from(cells).forEach((cell) => cell.classList.add("endofgame"));
 
-  setTimeout(function(){
-  if (currentPlayer === "o") {
-    let playAgain = window.prompt(`The winner is ${player1_name}, would you like to play again?`);
-    if (playAgain.toLowerCase() === "yes"){
-      // RESTARTS THE GAME
-      resetBoard()
+  setTimeout(function () {
+    if (currentPlayer === "o") {
+      let playAgain = window
+        .prompt(`The winner is ${player1_name}, would you like to play again?`)
+        .toLowerCase();
+      if (playAgain === "yes") {
+        // RESTARTS THE GAME
+        resetBoard();
+      } else {
+        goodBye();
+      }
     } else {
-      goodBye()
+      let playAgain = window
+        .prompt(`The winner is ${player2_name}, would you like to play again?`)
+        .toLowerCase();
+      if (playAgain === "yes") {
+        // RESTARTS THE GAME
+        resetBoard();
+      } else {
+        goodBye();
+      }
     }
-  } else {
-    let playAgain = window.prompt(`The winner is ${player2_name}, would you like to play again?`);
-    if (playAgain.toLowerCase() === "yes"){
-      // RESTARTS THE GAME
-      resetBoard()
-    } else {
-      goodBye()
-    }
-  }
-  }, 1000)
-  
+  }, 1000);
 }
 
-
 //RESTART OF THE GAME
-function resetBoard(){
-  let cells = document.getElementsByTagName("td")
-  Array.from(cells).forEach(cell => {
-    cell.classList.remove("endofgame", "x", "o", "disabled")
-    cell.innerHTML = null
-})
+function resetBoard() {
+  let cells = document.getElementsByTagName("td");
+  Array.from(cells).forEach((cell) => {
+    cell.classList.remove("endofgame", "x", "o", "disabled");
+    cell.innerHTML = null;
+  });
   initialGame.board = [
     [null, null, null],
     [null, null, null],
     [null, null, null],
-  ]
-  winner = false
-  setTimeout(function(){chosenPlayer()}, 500);
+  ];
+  winner = false;
+  setTimeout(function () {
+    chosenPlayer();
+  }, 500);
 }
 
 //SAYS GOODBYE
-function goodBye(){
-  alert("Thank you for playing. See you next time!")
+function goodBye() {
+  alert("Thank you for playing. See you next time!");
 }
