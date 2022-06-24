@@ -74,6 +74,9 @@ function playerMove(event) {
     clickedElement.innerHTML = currentPlayer.toUpperCase();
     clickedElement.classList.add(currentPlayer, "disabled");
     endOfGame(initialGame.board);
+    setTimeout(function () {
+      computerPlays();
+    }, 300);
     if (currentPlayer === "o") {
       displayTurn.innerHTML = player1_name + "'s turn.";
       currentPlayer = "x";
@@ -182,7 +185,7 @@ function getDraw() {
       } else {
         goodBye();
       }
-    }, 300);
+    }, 100);
   }
 }
 
@@ -232,6 +235,9 @@ function resetBoard() {
   setTimeout(function () {
     chosenPlayer();
   }, 500);
+  setTimeout(function () {
+    computerPlays();
+  }, 600);
 }
 
 //SAYS GOODBYE
@@ -240,6 +246,24 @@ function goodBye() {
 }
 
 //COMPUTER AI
-function computerPlays(){
-  if (player2_name === "Computer")
+function computerPlays() {
+  if (player2_name === "Computer" && currentPlayer === "o") {
+    let allCells = document.getElementsByTagName("td");
+    let availableCells = [];
+    for (let i = 0; i < allCells.length; i++) {
+      if (allCells[i].textContent === "") {
+        availableCells.push(allCells[i]);
+      }
+    }
+    let randomCell = Math.floor(Math.random() * (availableCells.length));
+    let chosenCell = availableCells[randomCell];
+    console.log(chosenCell)
+    chosenCell.click();
+  }
 }
+
+setTimeout(function () {
+  computerPlays();
+}, 300);
+
+// START WITH THE AI. COMPUTER ESTABA GANANDO DOS VECES Y REEMPLAZABA TECLA YA PUESTA.
