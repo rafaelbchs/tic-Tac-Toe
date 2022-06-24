@@ -238,3 +238,8 @@ function resetBoard() {
 function goodBye() {
   alert("Thank you for playing. See you next time!");
 }
+
+//COMPUTER AI
+function computerPlays(){
+  if (player2_name === "Computer")
+}
