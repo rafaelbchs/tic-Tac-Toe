@@ -8,6 +8,7 @@ const initialGame = {
   ],
 };
 
+//ASKS PLAYERS FOR THEIR NAMES
 let player1_name = window.prompt(
   "Before we start, I need you to tell me your name."
 );
@@ -85,7 +86,6 @@ function playerMove(event) {
       displayTurn.innerHTML = player2_name + "'s turn.";
     }
   }
-
 }
 
 //CHECKS PLAYERS' CLICKS
@@ -146,40 +146,44 @@ function checkWinner(arrToCheck) {
   return false;
 }
 
+let winner = false
 //ENDS THE GAME
 function endOfGame(board) {
   for (let i = 0; i < board.length; i++) {
     let rowChecked = getRow(board, i);
     let rowAnswer = checkWinner(rowChecked);
     if (rowAnswer) {
-      gameFinished()      
+      winner = true 
+      gameFinished()    
     }
     let colChecked = getColumn(board, i);
     let colAnswer = checkWinner(colChecked);
     if (colAnswer) {
-      gameFinished()
-    }
+      winner = true 
+      gameFinished() 
+    } 
   }
   for (let i = 0; i < 2; i++) {
     let diagonalChecked = getDiagonal(board, i);
     let diagAnswer = checkWinner(diagonalChecked);
     if (diagAnswer) {
-      gameFinished()
-    }
+      winner = true 
+      gameFinished() 
+    } 
   }
   getDraw()
 }
 
 //CHECKS FOR DRAW
-function getDraw(){
+function getDraw() {
   let completeBoard = initialGame.board.toString()
-  if (completeBoard.length === 17) {
+  if (completeBoard.length === 17 && winner === false) {
     setTimeout(function(){
       let playAgain = window.prompt("It's a draw, would you like to play again?")
     if (playAgain.toLowerCase() === "yes"){
       resetBoard()
     } else {
-      window.prompt("Thank you for playing. See you next time!")
+      goodBye()
     }
     }, 300)
   }
@@ -198,7 +202,7 @@ function gameFinished(){
       // RESTARTS THE GAME
       resetBoard()
     } else {
-      window.prompt("Thank you for playing. See you next time!")
+      goodBye()
     }
   } else {
     let playAgain = window.prompt(`The winner is ${player2_name}, would you like to play again?`);
@@ -206,13 +210,12 @@ function gameFinished(){
       // RESTARTS THE GAME
       resetBoard()
     } else {
-      window.prompt("Thank you for playing. See you next time!")
+      goodBye()
     }
   }
   }, 1000)
   
 }
-
 
 
 //RESTART OF THE GAME
@@ -227,6 +230,11 @@ function resetBoard(){
     [null, null, null],
     [null, null, null],
   ]
+  winner = false
   setTimeout(function(){chosenPlayer()}, 500);
 }
 
+//SAYS GOODBYE
+function goodBye(){
+  alert("Thank you for playing. See you next time!")
+}
