@@ -19,6 +19,7 @@ let player2_name = window.prompt(
 );
 
 
+
 // CHANGING THE PLAYERS' NAMES
 let player1 = document.getElementsByClassName("player1")[0];
 player1.innerHTML = player1_name;
@@ -76,14 +77,15 @@ function playerMove(event) {
     clickedElement.innerHTML = currentPlayer.toUpperCase();
     clickedElement.classList.add(currentPlayer, "disabled");
     endOfGame(initialGame.board);
+    if (currentPlayer === "o") {
+      displayTurn.innerHTML = player1_name + "'s turn.";
+      currentPlayer = "x";
+    } else {
+      currentPlayer = "o";
+      displayTurn.innerHTML = player2_name + "'s turn.";
+    }
   }
-  if (currentPlayer === "o") {
-    displayTurn.innerHTML = player1_name + "'s turn.";
-    currentPlayer = "x";
-  } else {
-    currentPlayer = "o";
-    displayTurn.innerHTML = player2_name + "'s turn.";
-  }
+
 }
 
 //CHECKS PLAYERS' CLICKS
@@ -150,15 +152,12 @@ function endOfGame(board) {
     let rowChecked = getRow(board, i);
     let rowAnswer = checkWinner(rowChecked);
     if (rowAnswer) {
-      gameFinished()
-      return true;
-      
+      gameFinished()      
     }
     let colChecked = getColumn(board, i);
     let colAnswer = checkWinner(colChecked);
     if (colAnswer) {
       gameFinished()
-      return true;
     }
   }
   for (let i = 0; i < 2; i++) {
@@ -166,10 +165,24 @@ function endOfGame(board) {
     let diagAnswer = checkWinner(diagonalChecked);
     if (diagAnswer) {
       gameFinished()
-      return true;
     }
   }
-  return false
+  getDraw()
+}
+
+//CHECKS FOR DRAW
+function getDraw(){
+  let completeBoard = initialGame.board.toString()
+  if (completeBoard.length === 17) {
+    setTimeout(function(){
+      let playAgain = window.prompt("It's a draw, would you like to play again?")
+    if (playAgain.toLowerCase() === "yes"){
+      resetBoard()
+    } else {
+      window.prompt("Thank you for playing. See you next time!")
+    }
+    }, 300)
+  }
 }
 
 
@@ -183,7 +196,7 @@ function gameFinished(){
     let playAgain = window.prompt(`The winner is ${player1_name}, would you like to play again?`);
     if (playAgain.toLowerCase() === "yes"){
       // RESTARTS THE GAME
-      console.log("Game restarts")
+      resetBoard()
     } else {
       window.prompt("Thank you for playing. See you next time!")
     }
@@ -191,7 +204,7 @@ function gameFinished(){
     let playAgain = window.prompt(`The winner is ${player2_name}, would you like to play again?`);
     if (playAgain.toLowerCase() === "yes"){
       // RESTARTS THE GAME
-      console.log("Game restarts")
+      resetBoard()
     } else {
       window.prompt("Thank you for playing. See you next time!")
     }
@@ -200,4 +213,20 @@ function gameFinished(){
   
 }
 
+
+
 //RESTART OF THE GAME
+function resetBoard(){
+  let cells = document.getElementsByTagName("td")
+  Array.from(cells).forEach(cell => {
+    cell.classList.remove("endofgame", "x", "o", "disabled")
+    cell.innerHTML = null
+})
+  initialGame.board = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ]
+  setTimeout(function(){chosenPlayer()}, 500);
+}
+
