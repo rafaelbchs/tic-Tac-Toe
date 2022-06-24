@@ -46,6 +46,16 @@ h3 {
     pointer-events:none;
 }
 
+.endofgame{
+    pointer-events: none;
+    background-color: darkgrey;
+}
+
+.winner{
+    pointer-events: none;
+    background-color: goldenrod;
+}
+
 td:hover {
     opacity: 0.5;
 }

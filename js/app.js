@@ -1,3 +1,4 @@
+// START OF THE GAME
 const initialGame = {
   players: ["x", "o"],
   board: [
@@ -17,21 +18,25 @@ let player2_name = window.prompt(
     ". Are you going to play with someone else? If you are, type the name of the player. Otherwise, type no"
 );
 
+
+// CHANGING THE PLAYERS' NAMES
 let player1 = document.getElementsByClassName("player1")[0];
 player1.innerHTML = player1_name;
 
 let player2 = document.getElementsByClassName("player2")[0];
 
-if (player2_name === "no") {
+// IF THERE'S NO 2ND PLAYER, THE COMPUTER PLAYS.
+if (player2_name.toLowerCase() === "no") {
   player2_name = "Computer";
 } else {
   player2.innerHTML = player2_name;
 }
 
+// DISPLAYING PLAYERS' NAMES
 let displayTurn = document.getElementsByTagName("p")[0];
 
+// RANDOMLY SELECTING A STARTING PLAYER
 let currentPlayer = "";
-
 function chosenPlayer() {
   if (Math.random() < 0.5) {
     displayTurn.innerHTML =
@@ -43,11 +48,11 @@ function chosenPlayer() {
     currentPlayer = "o";
   }
 }
-
 chosenPlayer();
 
-const board = document.getElementById("table");
 
+//SETTING THE BOARD
+const board = document.getElementById("table");
 function makeRow() {
   let newRow = document.createElement("tr");
   for (let i = 0; i < 3; i++) {
@@ -60,6 +65,8 @@ makeRow();
 makeRow();
 makeRow();
 
+
+// ALTERNATING PLAYERS' TURNS
 function playerMove(event) {
   let clickedElement = event.target;
   if (clickedElement.tagName === "TD") {
@@ -68,7 +75,6 @@ function playerMove(event) {
     initialGame.board[currentRow][currentCol] = currentPlayer;
     clickedElement.innerHTML = currentPlayer.toUpperCase();
     clickedElement.classList.add(currentPlayer, "disabled");
-    console.log(initialGame.board)
     endOfGame(initialGame.board);
   }
   if (currentPlayer === "o") {
@@ -80,8 +86,12 @@ function playerMove(event) {
   }
 }
 
+//CHECKS PLAYERS' CLICKS
 board.addEventListener("click", playerMove);
 
+//BOARD VERIFIER
+
+//CHECKS ROWS
 function getRow(board, rowIndex) {
   let arr = [];
   let currentRow = board[rowIndex];
@@ -92,6 +102,7 @@ function getRow(board, rowIndex) {
   return arr;
 }
 
+//CHECKS COLUMNS
 function getColumn(board, colIndex) {
   let arr = [];
   for (let i = 0; i < board.length; i++) {
@@ -101,6 +112,8 @@ function getColumn(board, colIndex) {
   return arr;
 }
 
+
+//CHECKS DIAGONALS
 function getDiagonal(board, diagNumber) {
   let arr = [];
   if (!diagNumber) {
@@ -117,44 +130,74 @@ function getDiagonal(board, diagNumber) {
   return arr;
 }
 
+//CHECKS IF THERE'S A WINNER
 function checkWinner(arrToCheck) {
   let winnerA = ["x", "x", "x"].toString();
   let winnerB = ["o", "o", "o"].toString();
   let arrToCompare = arrToCheck.toString();
   if (arrToCompare === winnerA) {
     return true;
-    console.log("You've finished the game")
   }
   if (arrToCompare === winnerB) {
     return true;
-    console.log("You've finished the game")
   }
   return false;
 }
 
+//ENDS THE GAME
 function endOfGame(board) {
   for (let i = 0; i < board.length; i++) {
     let rowChecked = getRow(board, i);
     let rowAnswer = checkWinner(rowChecked);
     if (rowAnswer) {
+      gameFinished()
       return true;
-      console.log("You've finished the game")
+      
     }
     let colChecked = getColumn(board, i);
     let colAnswer = checkWinner(colChecked);
     if (colAnswer) {
+      gameFinished()
       return true;
-      console.log("You've finished the game")
     }
   }
   for (let i = 0; i < 2; i++) {
     let diagonalChecked = getDiagonal(board, i);
     let diagAnswer = checkWinner(diagonalChecked);
     if (diagAnswer) {
+      gameFinished()
       return true;
-      console.log("You've finished the game")
     }
   }
   return false
 }
 
+
+// SHOWS THAT THE GAME FINISHED
+function gameFinished(){
+  let cells = document.getElementsByTagName("td")
+  Array.from(cells).forEach(cell => cell.classList.add("endofgame"))
+
+  setTimeout(function(){
+  if (currentPlayer === "o") {
+    let playAgain = window.prompt(`The winner is ${player1_name}, would you like to play again?`);
+    if (playAgain.toLowerCase() === "yes"){
+      // RESTARTS THE GAME
+      console.log("Game restarts")
+    } else {
+      window.prompt("Thank you for playing. See you next time!")
+    }
+  } else {
+    let playAgain = window.prompt(`The winner is ${player2_name}, would you like to play again?`);
+    if (playAgain.toLowerCase() === "yes"){
+      // RESTARTS THE GAME
+      console.log("Game restarts")
+    } else {
+      window.prompt("Thank you for playing. See you next time!")
+    }
+  }
+  }, 1000)
+  
+}
+
+//RESTART OF THE GAME
