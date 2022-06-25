@@ -22,30 +22,38 @@ let player2_name = window.prompt(
 //CHOOSE DIFFICULTY
 
 // CHANGING THE PLAYERS' NAMES
-let player1 = document.getElementsByClassName("player1")[0];
-player1.innerHTML = player1_name;
+function updateNames() {
+  let player1 = document.getElementsByClassName("player1")[0];
+  player1.innerHTML = player1_name;
 
-let player2 = document.getElementsByClassName("player2")[0];
+  let player2 = document.getElementsByClassName("player2")[0];
+}
+updateNames();
 
 // IF THERE'S NO 2ND PLAYER, THE COMPUTER PLAYS.
 let hardMode = false;
-if (player2_name.toLowerCase() === "no") {
-  player2_name = "Computer";
-  let difficulty = window
-    .prompt("What difficulty would you like to play? Type easy or hard.")
-    .toLowerCase();
-  if (difficulty === "hard") {
-    hardMode = true;
+function askSecondPlayer() {
+  if (player2_name.toLowerCase() === "no") {
+    player2_name = "Computer";
+    let difficulty = window
+      .prompt("What difficulty would you like to play? Type easy or hard.")
+      .toLowerCase();
+    if (difficulty === "hard") {
+      hardMode = true;
+    }
+  } else {
+    player2.innerHTML = player2_name;
   }
-} else {
-  player2.innerHTML = player2_name;
 }
+
+askSecondPlayer();
 
 // DISPLAYING PLAYERS' NAMES
 let displayTurn = document.getElementsByTagName("p")[0];
 
 // RANDOMLY SELECTING A STARTING PLAYER
 let currentPlayer = "";
+
 function chosenPlayer() {
   if (Math.random() < 0.5) {
     displayTurn.innerHTML =
@@ -61,6 +69,7 @@ chosenPlayer();
 
 //SETTING THE BOARD
 const board = document.getElementById("table");
+
 function makeRow() {
   let newRow = document.createElement("tr");
   for (let i = 0; i < 3; i++) {
@@ -69,6 +78,7 @@ function makeRow() {
   }
   table.appendChild(newRow);
 }
+
 makeRow();
 makeRow();
 makeRow();
@@ -185,6 +195,9 @@ function endOfGame(board) {
 function getDraw() {
   let completeBoard = initialGame.board.toString();
   if (completeBoard.length === 17 && winner === false) {
+    winner = true;
+    let cells = document.getElementsByTagName("td");
+    Array.from(cells).forEach((cell) => cell.classList.add("endofgame"));
     setTimeout(function () {
       let playAgain = window
         .prompt("It's a draw, would you like to play again?")
@@ -194,7 +207,7 @@ function getDraw() {
       } else {
         goodBye();
       }
-    }, 100);
+    }, 1000);
   }
 }
 
@@ -263,11 +276,6 @@ function computerPlays() {
   }
 }
 
-// ALLOWS THE COMPUTER (IF CHOSEN) TO PLAY FIRST
-setTimeout(function () {
-  computerPlays();
-}, 300);
-
 //HARD DIFFICULTY FIX AI HARD MODE. Please forgive me, I had to hard code the first part. I couldn't wrap my head around it.
 function playHard() {
   let allCells = document.getElementsByTagName("td");
@@ -329,3 +337,8 @@ function playNormal() {
     chosenCell.click();
   }
 }
+
+// ALLOWS THE COMPUTER (IF CHOSEN) TO PLAY FIRST
+setTimeout(function () {
+  computerPlays();
+}, 300);
