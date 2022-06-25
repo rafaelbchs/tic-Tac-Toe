@@ -85,6 +85,7 @@ function playerMove(event) {
       displayTurn.innerHTML = player2_name + "'s turn.";
     }
   }
+
 }
 
 //CHECKS PLAYERS' CLICKS
@@ -247,7 +248,7 @@ function goodBye() {
 
 //COMPUTER AI
 function computerPlays() {
-  if (player2_name === "Computer" && currentPlayer === "o") {
+  if (player2_name === "Computer" && currentPlayer === "o" && !winner) {
     let allCells = document.getElementsByTagName("td");
     let availableCells = [];
     for (let i = 0; i < allCells.length; i++) {
@@ -257,7 +258,6 @@ function computerPlays() {
     }
     let randomCell = Math.floor(Math.random() * (availableCells.length));
     let chosenCell = availableCells[randomCell];
-    console.log(chosenCell)
     chosenCell.click();
   }
 }
@@ -266,4 +266,3 @@ setTimeout(function () {
   computerPlays();
 }, 300);
 
-// START WITH THE AI. COMPUTER ESTABA GANANDO DOS VECES Y REEMPLAZABA TECLA YA PUESTA.
