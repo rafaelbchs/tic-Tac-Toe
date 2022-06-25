@@ -19,6 +19,8 @@ let player2_name = window.prompt(
     ". Are you going to play with someone else? If you are, type the name of the player. Otherwise, type no"
 );
 
+//CHOOSE DIFFICULTY
+
 // CHANGING THE PLAYERS' NAMES
 let player1 = document.getElementsByClassName("player1")[0];
 player1.innerHTML = player1_name;
@@ -26,8 +28,15 @@ player1.innerHTML = player1_name;
 let player2 = document.getElementsByClassName("player2")[0];
 
 // IF THERE'S NO 2ND PLAYER, THE COMPUTER PLAYS.
+let hardMode = false;
 if (player2_name.toLowerCase() === "no") {
   player2_name = "Computer";
+  let difficulty = window
+    .prompt("What difficulty would you like to play? Type easy or hard.")
+    .toLowerCase();
+  if (difficulty === "hard") {
+    hardMode = true;
+  }
 } else {
   player2.innerHTML = player2_name;
 }
@@ -85,7 +94,6 @@ function playerMove(event) {
       displayTurn.innerHTML = player2_name + "'s turn.";
     }
   }
-
 }
 
 //CHECKS PLAYERS' CLICKS
@@ -248,6 +256,66 @@ function goodBye() {
 
 //COMPUTER AI
 function computerPlays() {
+  if (hardMode) {
+    playHard();
+  } else {
+    playNormal();
+  }
+}
+
+// ALLOWS THE COMPUTER (IF CHOSEN) TO PLAY FIRST
+setTimeout(function () {
+  computerPlays();
+}, 300);
+
+//HARD DIFFICULTY FIX AI HARD MODE. Please forgive me, I had to hard code the first part. I couldn't wrap my head around it.
+function playHard() {
+  let allCells = document.getElementsByTagName("td");
+  let row0 = [allCells[0], allCells[1], allCells[2]];
+  let row1 = [allCells[3], allCells[4], allCells[5]];
+  let row2 = [allCells[6], allCells[7], allCells[8]];
+
+  let col0 = [allCells[0], allCells[3], allCells[6]];
+  let col1 = [allCells[1], allCells[4], allCells[7]];
+  let col2 = [allCells[2], allCells[5], allCells[8]];
+
+  let diag1 = [allCells[0], allCells[4], allCells[8]];
+  let diag2 = [allCells[2], allCells[4], allCells[6]];
+
+  let currentBoard = [row0, row1, row2, col0, col1, col2, diag1, diag2];
+
+  let foundXs = false;
+  if (player2_name === "Computer" && currentPlayer === "o" && !winner) {
+    for (let i = 0; i < currentBoard.length; i++) {
+      let cellsToCheck = currentBoard[i];
+      let xCounter = 0;
+      let oCounter = 0;
+      for (let j = 0; j < 3; j++) {
+        let currentCell = cellsToCheck[j];
+        if (currentCell.textContent === "X") {
+          xCounter++;
+        } else if (currentCell.textContent === "O") {
+          oCounter++;
+        }
+      }
+      if (xCounter === 2 || oCounter === 2) {
+        for (let k = 0; k < 3; k++) {
+          let currentCell = cellsToCheck[k];
+          if (currentCell.textContent === "" && !foundXs) {
+            currentCell.click();
+            foundXs = true;
+          }
+        }
+      }
+    }
+    if (!foundXs) {
+      playNormal();
+    }
+  }
+}
+
+//NORMAL DIFFICULTY
+function playNormal() {
   if (player2_name === "Computer" && currentPlayer === "o" && !winner) {
     let allCells = document.getElementsByTagName("td");
     let availableCells = [];
@@ -256,13 +324,8 @@ function computerPlays() {
         availableCells.push(allCells[i]);
       }
     }
-    let randomCell = Math.floor(Math.random() * (availableCells.length));
+    let randomCell = Math.floor(Math.random() * availableCells.length);
     let chosenCell = availableCells[randomCell];
     chosenCell.click();
   }
 }
-
-setTimeout(function () {
-  computerPlays();
-}, 300);
-

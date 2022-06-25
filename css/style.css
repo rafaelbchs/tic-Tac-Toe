@@ -1,67 +1,65 @@
 * {
-    box-sizing: border-box;
-    font-family: 'Shadows Into Light', cursive;
-    letter-spacing: 1px;
-    font-weight: bolder;
+  box-sizing: border-box;
+  font-family: "Shadows Into Light", cursive;
+  letter-spacing: 1px;
+  font-weight: bolder;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
 }
 
 html {
-    background-color:lemonchiffon;
-    color: black;
+  background-color: lemonchiffon;
+  color: black;
 }
 
 body {
-    margin: auto;
-    margin: 0;
-    text-align: center;
+  margin: auto;
+  margin: 0;
+  text-align: center;
 }
-
 
 td {
-    height: 150px;
-    width: 150px;
-    background-color: #78bec5;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 3rem;  
+  height: 150px;
+  width: 150px;
+  background-color: #78bec5;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 3rem;
 }
 
-
 h3 {
-    display: inline-block;
-    width: 20%;
+  display: inline-block;
+  width: 20%;
 }
 
 .x {
-    background-color: khaki;
+  background-color: khaki;
 }
 
 .o {
-    background-color: tomato;
+  background-color: tomato;
 }
 
-.disabled{
-    pointer-events:none;
+.disabled {
+  pointer-events: none;
 }
 
-.endofgame{
-    pointer-events: none;
-    background-color: darkgrey;
+.endofgame {
+  pointer-events: none;
+  background-color: darkgrey;
 }
 
-.winner{
-    pointer-events: none;
-    background-color: goldenrod;
+.winner {
+  pointer-events: none;
+  background-color: goldenrod;
 }
 
 td:hover {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 #table {
-    margin: auto;
+  margin: auto;
 }
